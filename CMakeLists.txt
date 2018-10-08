@@ -8,6 +8,7 @@ add_executable(${PROJECT_NAME} main.cpp
 	Src/observable.cpp
 	Src/primitive.cpp
 	Src/shader.cpp
+	Src/logic.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
