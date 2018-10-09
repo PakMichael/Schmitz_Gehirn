@@ -1,4 +1,4 @@
-#include "logic.h"
+#include "game.h"
 #include "engine.h"
 
 
@@ -7,7 +7,7 @@
 int main(){
 
 	Engine engine;
-	Logic logic;
-	logic.addObserver(&engine);
-	logic.init();
+	Game game;
+	game.addObserver(&engine);
+	game.init();
 }

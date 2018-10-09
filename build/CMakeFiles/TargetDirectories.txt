@@ -1,3 +1,0 @@
-C:/Users/Michael/Documents/GitHub/Schmitz_Gehirn/build/CMakeFiles/Schmitz_Gehirn.dir
-C:/Users/Michael/Documents/GitHub/Schmitz_Gehirn/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Michael/Documents/GitHub/Schmitz_Gehirn/build/CMakeFiles/ZERO_CHECK.dir
