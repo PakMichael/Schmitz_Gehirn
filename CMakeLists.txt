@@ -11,6 +11,7 @@ add_executable(${PROJECT_NAME} main.cpp
 	Src/observable.cpp
 	Src/primitive.cpp
 	Src/shader.cpp
+	Src/meeseeks.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

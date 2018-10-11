@@ -90,3 +90,33 @@ void Backstage::setCellSize(float relativeCellSizeX, float relativeCellSizeY) {
 	this->relativeCellSizeY = relativeCellSizeY;
 
 }
+
+void Backstage::seedPopulation() {
+	for (int a = 0; a < 100; ++a) {
+		population[a] = new Meeseeks();
+	}
+
+}
+
+void Backstage::evolveOnce(Meeseeks* subj) {
+	Figure* tmp = subj->getBody();
+	switch (subj->getNextMove()) {
+	case 0:
+
+		break;
+	case 1:
+		break;
+
+
+
+	}
+
+}
+
+void Backstage::startEvolution() {
+
+}
+
+int Backstage::calculateEnergy() {
+	return 0;
+}

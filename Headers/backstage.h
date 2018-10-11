@@ -4,11 +4,13 @@
 #include "figure.h"
 #include "primitive.h"
 #include <vector>
+#include "meeseeks.h"
 
 
 class Backstage : public Entity {
 private:
 	bool cellsTaken[22][10];
+	Meeseeks* population[100];
 	std::vector<Rectangle*> map;
 	int height;
 	int width;
@@ -30,6 +32,12 @@ public:
 
 private:
 	void createBorders();
+
+public:
+	void seedPopulation();
+	void evolveOnce(Meeseeks* subj);
+	void startEvolution();
+	int  calculateEnergy();
 };
 
 
