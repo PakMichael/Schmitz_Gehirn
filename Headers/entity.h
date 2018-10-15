@@ -27,6 +27,7 @@ public:
 	void outline();
 	void setScreenSize(int height, int width);
 	virtual void moveTo(int key) = 0;
+	virtual void nudge() = 0;
 
 
 protected:

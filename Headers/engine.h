@@ -15,6 +15,7 @@ class Engine : public Observer{
 	GLFWwindow* window;
 	bool redraw;
 	bool nudgeFigure;
+	bool nudgeBackstage;
 	bool dropFigure;
 	int screenHeight, screenWidth;
 

@@ -7,7 +7,7 @@
 #include "backstage.h"
 #include <vector>
 #include <string>
-
+#include <thread>
 
 
 class Game : public Observer, public Observable {
@@ -15,11 +15,13 @@ class Game : public Observer, public Observable {
 	Backstage* gameField;
 	float relativeCellSizeX = 0.05f;
 	float relativeCellSizeY = 0.05f;
-
+	std::thread t;
 public:
 	void init();
 	void createFigure();
 	void induceMovement();
+	void initSimulation();
+
 
 
 private:

@@ -5,9 +5,9 @@
 #include "primitive.h"
 #include <vector>
 #include "meeseeks.h"
+#include "observable.h"
 
-
-class Backstage : public Entity {
+class Backstage : public Entity, public Observable {
 private:
 	bool cellsTaken[22][10];
 	Meeseeks* population[100];
@@ -29,7 +29,7 @@ public:
 	int scaledPositionToIndex(float scale);
 	void setScreenSize(int height, int width);
 	void setCellSize(float relativeCellSizeX, float relativeCellSizeY);
-
+	void nudge();
 private:
 	void createBorders();
 

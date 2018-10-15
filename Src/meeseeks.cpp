@@ -2,8 +2,10 @@
 
 Meeseeks::Meeseeks() {
 	mortalBody = new Figure(0.05, 0.05);
-	seedRandTable();
 	produceGenes();
+	seedRandTable();
+
+	
 }
 int Meeseeks::getNextMove() {
 

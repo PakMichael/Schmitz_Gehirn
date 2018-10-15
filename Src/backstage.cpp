@@ -3,8 +3,8 @@
 
 Backstage::Backstage() {
 	relativeCellSizeX = relativeCellSizeY = 0.05;
-	createBorders();
-	reconstructBackstage();
+	//	createBorders();
+		//reconstructBackstage();
 }
 
 
@@ -31,6 +31,10 @@ void Backstage::consumeFigure(Figure* fig) {
 }
 
 void Backstage::reconstructBackstage() {
+	for (int a = 0; a < 100; ++a)
+	{
+		population[a]->getBody()->fulfilProphecy();
+	}
 	std::vector<Primitive*> carcass;  //possibly huge overhead along with some voulnrabilities 
 	for (Primitive* m : map)
 	{
@@ -92,8 +96,10 @@ void Backstage::setCellSize(float relativeCellSizeX, float relativeCellSizeY) {
 }
 
 void Backstage::seedPopulation() {
+
 	for (int a = 0; a < 100; ++a) {
 		population[a] = new Meeseeks();
+
 	}
 
 }
@@ -102,21 +108,35 @@ void Backstage::evolveOnce(Meeseeks* subj) {
 	Figure* tmp = subj->getBody();
 	switch (subj->getNextMove()) {
 	case 0:
-
+		tmp->moveDown();
 		break;
 	case 1:
+		tmp->moveLeft();
 		break;
-
-
+	case 2:
+		tmp->moveRight();
+		break;
+	case 3:
+		tmp->moveUp();
+		break;
 
 	}
 
 }
 
 void Backstage::startEvolution() {
-
+	map.clear();
+	for (int a = 0; a < 100; ++a) {
+		evolveOnce(population[a]);
+		consumeFigure(population[a]->getBody());
+	}
 }
 
 int Backstage::calculateEnergy() {
 	return 0;
+}
+
+
+void Backstage::nudge() {
+	reconstructBackstage();
 }

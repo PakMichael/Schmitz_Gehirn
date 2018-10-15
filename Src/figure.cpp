@@ -10,8 +10,8 @@ bool blueprints[7][8] = {   /* sorry for this :C */
 Figure::Figure(float height, float width) {
 	this->relativeHeight = height;
 	this->relativeWidth = width;
-	tempX = relativeWidth * (rand() % 40 - 20);
-	tempY = 1;
+	tempX = 0;
+	tempY = 0;
 
 	speed = 1;
 	collidedGround = false;
@@ -29,6 +29,10 @@ void Figure::init() {
 	//t = std::thread(&Figure::freeFall, this);
 }
 
+
+void Figure::nudge() {
+
+}
 void Figure::freeFall() {
 	while (!collidedGround)
 	{

@@ -42,7 +42,7 @@ public:
 	void moveDown();
 	void moveUp();
 	void rotate();
-
+	void nudge();
 	int getDirection();
 
 	void init();

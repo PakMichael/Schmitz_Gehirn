@@ -7,6 +7,7 @@ Engine::Engine() {
 
 	redraw = true;
 	nudgeFigure = false;
+	nudgeBackstage = false;
 }
 
 
@@ -21,7 +22,7 @@ void Engine::start() {
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-		if (nudgeFigure)
+	/*	if (nudgeFigure)
 		{
 			playersFigure->moveTo((int)'E');
 			nudgeFigure = false;
@@ -29,6 +30,10 @@ void Engine::start() {
 		if (dropFigure) {
 			playersFigure->moveTo((int)'S');
 			dropFigure = false;
+		}*/
+		if (nudgeBackstage) {
+			backstage->nudge();
+			nudgeBackstage = false;
 		}
 		if (redraw)
 		{
@@ -37,7 +42,7 @@ void Engine::start() {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			draw(backstage);
-			draw(playersFigure);
+			//draw(playersFigure);
 
 			glfwSwapBuffers(window);
 		}
@@ -66,9 +71,9 @@ void Engine::updateBackstage(Entity* objPtr) {
 void Engine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 
 
-	if (action == GLFW_PRESS)
+/*	if (action == GLFW_PRESS)
 		playersFigure->moveTo(key);
-
+*/
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
@@ -120,6 +125,7 @@ void Engine::update(std::string msg, void* obj) {
 	if (msg == "updPlayerFigure") { updatePlayerFigure((Entity*)obj); return; }
 	if (msg == "updBackstage") { updateBackstage((Entity*)obj); return; }
 	if (msg == "immobilized") { nudgeFigure = true; };
+	if (msg == "nudgeBackstage") { nudgeBackstage = true; };
 	if (msg == "drop") { dropFigure = true; };
 	if (msg == "start") { start(); };
 	if (msg == "init")
