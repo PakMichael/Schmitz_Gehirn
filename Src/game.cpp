@@ -2,19 +2,20 @@
 
 using namespace std;
 void Game::init() {
+	initializeRemarks();
 	int heightPX = 600;
 	int widthPX = 1000;
 	relativeCellSizeX = 0.025; //0.0833;
 	relativeCellSizeY = 0.05;
-	notify("init", new Point2D(widthPX, heightPX));
+	makeRemark("init", new Point2D(widthPX, heightPX));
 	srand(std::time(0));
 	gameField = new Backstage();
 	gameField->setScreenSize(widthPX, heightPX);
 	gameField->setCellSize(relativeCellSizeX, relativeCellSizeY);
-	notify("updBackstage", gameField);
+	makeRemark("updBackstage", gameField);
 	gameField->seedPopulation();
-	  t = std::thread(&Game::initSimulation, this);
-	notify("start");
+	t = std::thread(&Game::initSimulation, this);
+	makeRemark("start", 0);
 	t.join();
 }
 
@@ -22,20 +23,21 @@ void Game::init() {
 void Game::createFigure() {
 	//deprecated
 	Figure* tmp = new Figure(relativeCellSizeY, relativeCellSizeX);
-	tmp->addObserver(this);
+	tmp->addSupervisor(this);
 	figureFlying = tmp;
-	notify("updPlayerFigure", figureFlying);
+	makeRemark("updPlayerFigure", figureFlying);
 	tmp->init();
 
 }
 void Game::initSimulation() {
 
-	for (int a = 0; a < 5; ++a) {
+	for (int a = 0; a < 50; ++a) {
 		gameField->startEvolution();
-		notify("nudgeBackstage");
-		notify("redraw");
+
+		setFlag("nudgeBackstage", true);
+		setFlag("redrawAll", true);
 		clock_t now = clock() / CLOCKS_PER_SEC;
-		while (clock() / CLOCKS_PER_SEC - now < 1);
+		while (clock() / CLOCKS_PER_SEC - now < 0.1);
 	}
 }
 
@@ -70,8 +72,7 @@ void Game::induceMovement() {
 	if (!gameField->collisionOccured(figureFlying))
 	{
 		figureFlying->fulfilProphecy();
-
-		notify("redraw");
+		changeFlag("redrawAll", true);
 		/*	float tmpx;
 			float tmpy;
 			figureFlying->getCoordinates(tmpx, tmpy);
@@ -86,13 +87,27 @@ void Game::induceMovement() {
 	}
 
 }
-
-void Game::update(std::string msg, void* obj) {
-	if (msg == "moveTo")induceMovement();
-	if (msg == "immovable") {
+void Game::initializeRemarks() {
+	declareRemark("moveTo", [this](void* ptr)
+	{
+		induceMovement();
+	});
+	declareRemark("immovable", [this](void* ptr)
+	{
 		gameField->reconstructBackstage();
 		createFigure();
-	}
-	if (msg == "drop")notify("drop");
-	if (msg == "evolved")notify("redraw");
+	});
+	declareRemark("immovable", [this](void* ptr)
+	{
+		gameField->reconstructBackstage();
+		createFigure();
+	});
+	declareRemark("drop", [this](void* ptr)
+	{
+		changeFlag("drop", true);
+	});
+	declareRemark("redraw", [this](void* ptr)
+	{
+		changeFlag("redraw", true);
+	});
 }

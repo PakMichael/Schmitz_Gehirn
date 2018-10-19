@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "observer.h"
-#include "observable.h"
+#include "supervisor.h"
+#include "subordinate.h"
 #include "figure.h"
 #include "backstage.h"
 #include <vector>
@@ -10,7 +10,7 @@
 #include <thread>
 
 
-class Game : public Observer, public Observable {
+class Game : public Supervisor, public Subordinate {
 	Figure* figureFlying;
 	Backstage* gameField;
 	float relativeCellSizeX = 0.05f;
@@ -25,8 +25,7 @@ public:
 
 
 private:
-	void update(std::string msg, void* obj);
-
+	void initializeRemarks();
 
 
 

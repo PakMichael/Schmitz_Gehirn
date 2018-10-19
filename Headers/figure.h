@@ -3,7 +3,7 @@
 
 # define M_PI 3.14159265358979323846
 
-#include "observable.h"
+#include "subordinate.h"
 #include "entity.h"
 #include "primitive.h"
 #include <cstdlib>
@@ -15,7 +15,7 @@
 extern bool blueprints[7][8];
 
 
-class Figure : public Observable, public Entity{
+class Figure : public Subordinate, public Entity{
 
 
 	int blueprintIndex;

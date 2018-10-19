@@ -5,9 +5,9 @@
 #include "primitive.h"
 #include <vector>
 #include "meeseeks.h"
-#include "observable.h"
+#include "subordinate.h"
 
-class Backstage : public Entity, public Observable {
+class Backstage : public Entity, public Subordinate{
 private:
 	bool cellsTaken[22][10];
 	Meeseeks* population[100];

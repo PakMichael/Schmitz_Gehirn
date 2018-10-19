@@ -4,10 +4,8 @@
 
 Engine::Engine() {
 	playersFigure = 0;
-
-	redraw = true;
-	nudgeFigure = false;
-	nudgeBackstage = false;
+	initializeRemarks();
+	initializeFlags();
 }
 
 
@@ -22,22 +20,14 @@ void Engine::start() {
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-	/*	if (nudgeFigure)
-		{
-			playersFigure->moveTo((int)'E');
-			nudgeFigure = false;
-		}
-		if (dropFigure) {
-			playersFigure->moveTo((int)'S');
-			dropFigure = false;
-		}*/
-		if (nudgeBackstage) {
+
+		if (getFlagValue("nudgeBackstage")) {
+			changeFlag("nudgeBackstage", false);
 			backstage->nudge();
-			nudgeBackstage = false;
 		}
-		if (redraw)
+		if (getFlagValue("redrawAll"))
 		{
-			redraw = false;
+			changeFlag("redrawAll", false);
 			glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
@@ -47,7 +37,7 @@ void Engine::start() {
 			glfwSwapBuffers(window);
 		}
 	}
-
+	glfwDestroyWindow(window);
 
 
 
@@ -71,9 +61,9 @@ void Engine::updateBackstage(Entity* objPtr) {
 void Engine::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 
 
-/*	if (action == GLFW_PRESS)
-		playersFigure->moveTo(key);
-*/
+	/*	if (action == GLFW_PRESS)
+			playersFigure->moveTo(key);
+	*/
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
@@ -119,21 +109,26 @@ void Engine::windowInitialize(int* h, int* w) {
 	glViewport(0, 0, *w, *h);
 }
 
-
-void Engine::update(std::string msg, void* obj) {
-	if (msg == "redraw") { redraw = true; return; }
-	if (msg == "updPlayerFigure") { updatePlayerFigure((Entity*)obj); return; }
-	if (msg == "updBackstage") { updateBackstage((Entity*)obj); return; }
-	if (msg == "immobilized") { nudgeFigure = true; };
-	if (msg == "nudgeBackstage") { nudgeBackstage = true; };
-	if (msg == "drop") { dropFigure = true; };
-	if (msg == "start") { start(); };
-	if (msg == "init")
-	{
-		screenHeight = ((Point2D*)obj)->getY();
-		screenWidth = ((Point2D*)obj)->getX();
+void Engine::initializeRemarks() {
+	declareRemark("updPlayerFigure", [this](void* ptr) {
+		this->updatePlayerFigure((Entity*)ptr);
+	});
+	declareRemark("updBackstage", [this](void* ptr) {
+		this->updateBackstage((Entity*)ptr);
+	});
+	declareRemark("start", [this](void* ptr) {
+		this->start();
+	});
+	declareRemark("init", [this](void* ptr) {
+		screenHeight = ((Point2D*)ptr)->getY();
+		screenWidth = ((Point2D*)ptr)->getX();
 		initializeGL();
-		return;
-	}
+	});
+}
+void Engine::initializeFlags() {
+	declareFlag("redrawAll", true);
+	declareFlag("immobilized");
+	declareFlag("nudgeBackstage");
+	declareFlag("drop");
 }
 

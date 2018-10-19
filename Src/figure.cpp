@@ -36,7 +36,7 @@ void Figure::nudge() {
 void Figure::freeFall() {
 	while (!collidedGround)
 	{
-		notify("drop");
+		setFlag("drop", true);
 		clock_t now = clock() / CLOCKS_PER_SEC;
 		while (clock() / CLOCKS_PER_SEC - now < speed);
 
@@ -46,9 +46,9 @@ void Figure::freeFall() {
 
 
 void Figure::moveTo(int key) {
-	if (key == 'E') { collidedGround = true; notify("immovable"); } //always called from main thread
+	if (key == 'E') { collidedGround = true; makeRemark("immovable", 0); } //always called from main thread
 	directionKey = key;
-	notify("moveTo");
+	makeRemark("moveTo", 0);
 }
 
 void Figure::moveRight() {

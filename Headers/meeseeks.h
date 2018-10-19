@@ -6,10 +6,11 @@
 #include <cmath>
 #include <figure.h>
 
+const int GENE_AMOUNT = 4;
+
 class Meeseeks {
-	const int numberOfGenes=4;
-	int randTable[100];  //100 percent
-	int genome[4] = {12, 23, 4, 45};
+
+	int genome[GENE_AMOUNT] = {12, 23, 5, 2};
 	int energy;
 	Figure* mortalBody;
 
@@ -18,7 +19,6 @@ public:
 	int getNextMove();
 	Figure* getBody();
 private:
-	void seedRandTable();
 	void produceGenes();
 
 };
