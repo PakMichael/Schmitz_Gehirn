@@ -7,15 +7,14 @@ Meeseeks::Meeseeks() {
 
 }
 int Meeseeks::getNextMove() {
-	//for (int a = 0; a < GENE_AMOUNT; ++a)
-	//{
-	//	if ((rand() % 100) <= genome[a])return a;
-	//}
-	return  rand() % GENE_AMOUNT;
+	int temp = rand() % GENE_AMOUNT;
+	if (rand() % 100 <= genome[temp])
+		return temp;
+	return -1;
 
 
 }
- 
+
 
 void Meeseeks::produceGenes() {
 	for (int a = 0; a < GENE_AMOUNT; ++a) {
@@ -26,4 +25,12 @@ void Meeseeks::produceGenes() {
 
 Figure* Meeseeks::getBody() {
 	return mortalBody;
+}
+
+
+void Meeseeks::setEnergy(int E) {
+	energy = E;
+}
+int Meeseeks::getEnergy() {
+	return energy;
 }

@@ -35,8 +35,9 @@ public:
 public:
 	Figure(float height, float width);
 	~Figure();
-
+	
 	void boostDown();
+	void moveNTimesBy(int x, int y);
 	void moveRight();
 	void moveLeft();
 	void moveDown();
@@ -44,6 +45,8 @@ public:
 	void rotate();
 	void nudge();
 	int getDirection();
+	float getX();
+	float getY();
 
 	void init();
 

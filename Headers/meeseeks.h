@@ -10,7 +10,7 @@ const int GENE_AMOUNT = 4;
 
 class Meeseeks {
 
-	int genome[GENE_AMOUNT] = {12, 23, 5, 2};
+	int genome[GENE_AMOUNT];
 	int energy;
 	Figure* mortalBody;
 
@@ -18,6 +18,8 @@ public:
 	Meeseeks();
 	int getNextMove();
 	Figure* getBody();
+	void setEnergy(int E);
+	int getEnergy();
 private:
 	void produceGenes();
 

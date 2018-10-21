@@ -13,6 +13,7 @@
 class Entity{
 
 protected:
+
 	float relativeWidth;
 	float relativeHeight;
 	float mX, mY;
@@ -28,7 +29,7 @@ public:
 	void setScreenSize(int height, int width);
 	virtual void moveTo(int key) = 0;
 	virtual void nudge() = 0;
-
+	bool COLORED_FLAG = false;
 
 protected:
 	void Entity::assemble(std::vector<Primitive*> carcass, int points);

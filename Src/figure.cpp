@@ -83,12 +83,21 @@ void Figure::rotate() {
 
 }
 
+void Figure::moveNTimesBy(int x, int y) {
+	tempX += relativeHeight * x;
+	tempY += relativeWidth * y;
+}
 
 int Figure::getDirection() {
 	return directionKey;
 }
+float Figure::getX() {
+	return mX;
+}
 
-
+float Figure::getY() {
+	return mY;
+}
 void Figure::constructCarcass() {
 	//runs once at the beginning 
 	//later only visually translates image without any change in model

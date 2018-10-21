@@ -12,6 +12,7 @@ private:
 	bool cellsTaken[22][10];
 	Meeseeks* population[100];
 	std::vector<Rectangle*> map;
+	Figure* goal;
 	int height;
 	int width;
 	float relativeCellSizeX;
@@ -34,10 +35,10 @@ private:
 	void createBorders();
 
 public:
-	void seedPopulation();
+	void seedPopulation(int from=0);
 	void evolveOnce(Meeseeks* subj);
 	void startEvolution();
-	int  calculateEnergy();
+	int  calcCostFunction(Meeseeks* obj);
 };
 
 

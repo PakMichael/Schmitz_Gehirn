@@ -3,6 +3,11 @@
 
 Backstage::Backstage() {
 	relativeCellSizeX = relativeCellSizeY = 0.05;
+	goal = new Figure(0.05, 0.05);
+	goal->moveNTimesBy(10, 10);
+
+	goal->fulfilProphecy();
+	consumeFigure(goal);
 	//	createBorders();
 		//reconstructBackstage();
 }
@@ -95,9 +100,9 @@ void Backstage::setCellSize(float relativeCellSizeX, float relativeCellSizeY) {
 
 }
 
-void Backstage::seedPopulation() {
+void Backstage::seedPopulation(int from) {
 
-	for (int a = 0; a < 100; ++a) {
+	for (int a = from; a < 100; ++a) {
 		population[a] = new Meeseeks();
 
 	}
@@ -124,16 +129,33 @@ void Backstage::evolveOnce(Meeseeks* subj) {
 
 }
 
-void Backstage::startEvolution() {
-	map.clear();
-	for (int a = 0; a < 100; ++a) {
-		evolveOnce(population[a]);
-		consumeFigure(population[a]->getBody());
-	}
+int cmp(const void *a, const void *b) {
+	int mA = ((Meeseeks*)a)->getEnergy();
+	int mB = ((Meeseeks*)b)->getEnergy();
+
+	if (mA > mB)return 1;
+	if (mA < mB)return -1;
+	return 0;
 }
 
-int Backstage::calculateEnergy() {
-	return 0;
+void Backstage::startEvolution() {
+	map.clear();
+	consumeFigure(goal);
+	for (int a = 0; a < 100; ++a) {
+		evolveOnce(population[a]);
+		population[a]->setEnergy(calcCostFunction(population[a]));
+		consumeFigure(population[a]->getBody());
+	}
+	std::qsort(population, 100, sizeof(Meeseeks*), cmp);
+	for (int a = 25; a < 100; ++a) {
+		population[a] = population[rand() % 25];
+	}
+
+}
+
+int Backstage::calcCostFunction(Meeseeks* obj) {
+	int dist = sqrt(pow(goal->getX() - obj->getBody()->getX(), 2) + pow(goal->getY() - obj->getBody()->getY(), 2));
+	return dist;
 }
 
 
