@@ -36,7 +36,7 @@ void Backstage::consumeFigure(Figure* fig) {
 }
 
 void Backstage::reconstructBackstage() {
-	for (int a = 0; a < 100; ++a)
+	for (int a = 0; a < POPULATION_COUNT; ++a)
 	{
 		population[a]->getBody()->fulfilProphecy();
 	}
@@ -102,7 +102,7 @@ void Backstage::setCellSize(float relativeCellSizeX, float relativeCellSizeY) {
 
 void Backstage::seedPopulation(int from) {
 
-	for (int a = from; a < 100; ++a) {
+	for (int a = from; a < POPULATION_COUNT; ++a) {
 		population[a] = new Meeseeks();
 
 	}
@@ -114,6 +114,7 @@ void Backstage::evolveOnce(Meeseeks* subj) {
 	switch (subj->getNextMove()) {
 	case 0:
 		tmp->moveDown();
+
 		break;
 	case 1:
 		tmp->moveLeft();
@@ -126,7 +127,6 @@ void Backstage::evolveOnce(Meeseeks* subj) {
 		break;
 
 	}
-
 }
 
 int cmp(const void *a, const void *b) {
@@ -141,15 +141,15 @@ int cmp(const void *a, const void *b) {
 void Backstage::startEvolution() {
 	map.clear();
 	consumeFigure(goal);
-	for (int a = 0; a < 100; ++a) {
+	for (int a = 0; a < POPULATION_COUNT; ++a) {
 		evolveOnce(population[a]);
 		population[a]->setEnergy(calcCostFunction(population[a]));
-		consumeFigure(population[a]->getBody());
 	}
-	std::qsort(population, 100, sizeof(Meeseeks*), cmp);
-	for (int a = 25; a < 100; ++a) {
-		population[a] = population[rand() % 25];
-	}
+
+	//std::qsort(population, 100, sizeof(Meeseeks*), cmp);
+	//for (int a = 25; a < 100; ++a) {
+	//	population[a] = population[rand() % 25];
+	//}
 
 }
 
@@ -160,5 +160,16 @@ int Backstage::calcCostFunction(Meeseeks* obj) {
 
 
 void Backstage::nudge() {
+	for (int a = 0; a < POPULATION_COUNT; ++a) {
+		population[a]->getBody()->fulfilProphecy();
+		consumeFigure(population[a]->getBody());
+		
+	}
 	reconstructBackstage();
+}
+
+void Backstage::fulfilAll() {
+	for (int a = 0; a < POPULATION_COUNT; ++a) {
+		population[a]->getBody()->fulfilProphecy();
+	}
 }

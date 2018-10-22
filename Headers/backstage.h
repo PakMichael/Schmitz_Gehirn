@@ -7,10 +7,12 @@
 #include "meeseeks.h"
 #include "subordinate.h"
 
+const int POPULATION_COUNT = 1;
+
 class Backstage : public Entity, public Subordinate{
 private:
 	bool cellsTaken[22][10];
-	Meeseeks* population[100];
+	Meeseeks* population[POPULATION_COUNT];
 	std::vector<Rectangle*> map;
 	Figure* goal;
 	int height;
@@ -39,6 +41,7 @@ public:
 	void evolveOnce(Meeseeks* subj);
 	void startEvolution();
 	int  calcCostFunction(Meeseeks* obj);
+	void fulfilAll();
 };
 
 

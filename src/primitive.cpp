@@ -45,7 +45,7 @@ Square::Square(float x, float y, float sidesSize) {
 }
 
 Square::~Square() {
-	std::cout << "squre destroyed" << std::endl;
+	//std::cout << "squre destroyed" << std::endl;
 }
 
 float Square::getVertexAt(int index) {
@@ -97,7 +97,7 @@ Rectangle::Rectangle(float x, float y, float width, float height) {
 }
 
 Rectangle::~Rectangle() {
-	std::cout << "rectangle rEkt" << std::endl;
+	//std::cout << "rectangle rEkt" << std::endl;
 }
 
 void Rectangle::build() {

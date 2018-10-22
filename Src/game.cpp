@@ -13,6 +13,7 @@ void Game::init() {
 	gameField->setScreenSize(widthPX, heightPX);
 	gameField->setCellSize(relativeCellSizeX, relativeCellSizeY);
 	makeRemark("updBackstage", gameField);
+	gameField->addSupervisor(this);
 	gameField->seedPopulation();
 	t = std::thread(&Game::initSimulation, this);
 	makeRemark("start", 0);
@@ -30,15 +31,14 @@ void Game::createFigure() {
 
 }
 void Game::initSimulation() {
-
-	for (int a = 0; a < 50; ++a) {
+	for (int a = 0; a < 1; ++a) {
 		gameField->startEvolution();
-
 		setFlag("nudgeBackstage", true);
 		setFlag("redrawAll", true);
 		clock_t now = clock() / CLOCKS_PER_SEC;
 		while (clock() / CLOCKS_PER_SEC - now < 0.1);
 	}
+
 }
 
 
@@ -109,5 +109,9 @@ void Game::initializeRemarks() {
 	declareRemark("redraw", [this](void* ptr)
 	{
 		changeFlag("redraw", true);
+	});
+	declareRemark("fulfilAllProphs", [this](void* ptr)
+	{
+		gameField->fulfilAll();
 	});
 }
