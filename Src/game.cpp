@@ -31,12 +31,15 @@ void Game::createFigure() {
 
 }
 void Game::initSimulation() {
+	setFlag("nudgeBackstage", true);
+	setFlag("redrawAll", true);
 	for (int a = 0; a < 1; ++a) {
+		clock_t now = clock() / CLOCKS_PER_SEC;
+		while (clock() / CLOCKS_PER_SEC - now < 0.1);
 		gameField->startEvolution();
 		setFlag("nudgeBackstage", true);
 		setFlag("redrawAll", true);
-		clock_t now = clock() / CLOCKS_PER_SEC;
-		while (clock() / CLOCKS_PER_SEC - now < 0.1);
+
 	}
 
 }
@@ -109,9 +112,5 @@ void Game::initializeRemarks() {
 	declareRemark("redraw", [this](void* ptr)
 	{
 		changeFlag("redraw", true);
-	});
-	declareRemark("fulfilAllProphs", [this](void* ptr)
-	{
-		gameField->fulfilAll();
 	});
 }

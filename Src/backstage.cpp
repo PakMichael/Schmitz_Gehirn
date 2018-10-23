@@ -8,6 +8,8 @@ Backstage::Backstage() {
 
 	goal->fulfilProphecy();
 	consumeFigure(goal);
+	//for (int a = 0; a < 50; ++a)
+	//	map.push_back(new Rectangle(a*0.05, 0, 0.05, 0.05));
 	//	createBorders();
 		//reconstructBackstage();
 }
@@ -36,10 +38,6 @@ void Backstage::consumeFigure(Figure* fig) {
 }
 
 void Backstage::reconstructBackstage() {
-	for (int a = 0; a < POPULATION_COUNT; ++a)
-	{
-		population[a]->getBody()->fulfilProphecy();
-	}
 	std::vector<Primitive*> carcass;  //possibly huge overhead along with some voulnrabilities 
 	for (Primitive* m : map)
 	{
@@ -140,11 +138,14 @@ int cmp(const void *a, const void *b) {
 
 void Backstage::startEvolution() {
 	map.clear();
+	//for (int a = 0; a < 50; ++a)
+	//	map.push_back(new Rectangle(a*0.05 , 0, 0.05, 0.05));
 	consumeFigure(goal);
-	for (int a = 0; a < POPULATION_COUNT; ++a) {
-		evolveOnce(population[a]);
-		population[a]->setEnergy(calcCostFunction(population[a]));
-	}
+	//for (int a = 0; a < POPULATION_COUNT; ++a) {
+	//	evolveOnce(population[a]);
+	//	population[a]->setEnergy(calcCostFunction(population[a]));
+	//}
+	population[0]->getBody()->moveLeft();
 
 	//std::qsort(population, 100, sizeof(Meeseeks*), cmp);
 	//for (int a = 25; a < 100; ++a) {
@@ -168,8 +169,3 @@ void Backstage::nudge() {
 	reconstructBackstage();
 }
 
-void Backstage::fulfilAll() {
-	for (int a = 0; a < POPULATION_COUNT; ++a) {
-		population[a]->getBody()->fulfilProphecy();
-	}
-}

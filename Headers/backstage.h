@@ -41,7 +41,6 @@ public:
 	void evolveOnce(Meeseeks* subj);
 	void startEvolution();
 	int  calcCostFunction(Meeseeks* obj);
-	void fulfilAll();
 };
 
 
