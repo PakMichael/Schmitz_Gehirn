@@ -1,7 +1,7 @@
 # Schmitz_Gehirn
 Hive mind intended for navigating and mapping 2D spaces.
 
-##About
+## About
 This whole project is dedicated to a simple idea behind genetic algorithms. Mainly: how to optimize for fuzzy, independent, parameters to obtain a useful, transferable model.
 
 The objective for the project is to make a system that can map a real world environment and navigate it. 
