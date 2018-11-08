@@ -20,13 +20,21 @@ void Engine::start() {
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
+		screenHeight++;
+		screenWidth++;
+		//if (getFlagValue("size")) {
+		//	changeFlag("size", false);
+		//	screenWidth=screenHeight = 300;
 
+		//	glfwSetWindowSize(window,screenHeight, screenWidth);
+		//}
 		if (getFlagValue("nudgeBackstage")) {
 			changeFlag("nudgeBackstage", false);
 			backstage->nudge();
 		}
 		if (getFlagValue("redrawAll"))
 		{
+
 			changeFlag("redrawAll", false);
 			glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -130,5 +138,6 @@ void Engine::initializeFlags() {
 	declareFlag("immobilized");
 	declareFlag("nudgeBackstage");
 	declareFlag("drop");
+	declareFlag("size");
 }
 

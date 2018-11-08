@@ -3,9 +3,9 @@
 using namespace std;
 void Game::init() {
 	initializeRemarks();
-	int heightPX = 600;
-	int widthPX = 1000;
-	relativeCellSizeX = 0.025; //0.0833;
+	int heightPX = 500;
+	int widthPX = 500;
+	relativeCellSizeX = 0.05; //0.0833;
 	relativeCellSizeY = 0.05;
 	makeRemark("init", new Point2D(widthPX, heightPX));
 	srand(std::time(0));
@@ -33,13 +33,13 @@ void Game::createFigure() {
 void Game::initSimulation() {
 	setFlag("nudgeBackstage", true);
 	setFlag("redrawAll", true);
-	for (int a = 0; a < 1; ++a) {
+	for (int a = 0; a < 50; ++a) {
 		clock_t now = clock() / CLOCKS_PER_SEC;
 		while (clock() / CLOCKS_PER_SEC - now < 0.1);
 		gameField->startEvolution();
 		setFlag("nudgeBackstage", true);
 		setFlag("redrawAll", true);
-
+		if (a == 3)setFlag("size", true);
 	}
 
 }

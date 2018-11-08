@@ -160,6 +160,7 @@ bool Figure::intersects(Rectangle* rec) {
 void Figure::fulfilProphecy() {
 	mX = tempX;
 	mY = tempY;
+
 	constructCarcass();
 }
 

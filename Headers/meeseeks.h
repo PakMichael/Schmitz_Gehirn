@@ -13,6 +13,9 @@ class Meeseeks {
 	int genome[GENE_AMOUNT];
 	int energy;
 	Figure* mortalBody;
+	std::vector<int> probabilityDistribution;
+public:
+	int id;
 
 public:
 	Meeseeks();

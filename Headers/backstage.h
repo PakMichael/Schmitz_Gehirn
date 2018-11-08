@@ -6,13 +6,15 @@
 #include <vector>
 #include "meeseeks.h"
 #include "subordinate.h"
+#include <algorithm>
 
-const int POPULATION_COUNT = 1;
+ 
 
 class Backstage : public Entity, public Subordinate{
 private:
+	const int POPULATION_COUNT = 50;
 	bool cellsTaken[22][10];
-	Meeseeks* population[POPULATION_COUNT];
+	std::vector <Meeseeks*> population; // don't forget  
 	std::vector<Rectangle*> map;
 	Figure* goal;
 	int height;

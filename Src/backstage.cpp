@@ -3,8 +3,8 @@
 
 Backstage::Backstage() {
 	relativeCellSizeX = relativeCellSizeY = 0.05;
-	goal = new Figure(0.05, 0.05);
-	goal->moveNTimesBy(10, 10);
+	goal = new Figure(0.1, 0.1f);
+	goal->moveNTimesBy(5, 5);
 
 	goal->fulfilProphecy();
 	consumeFigure(goal);
@@ -101,7 +101,7 @@ void Backstage::setCellSize(float relativeCellSizeX, float relativeCellSizeY) {
 void Backstage::seedPopulation(int from) {
 
 	for (int a = from; a < POPULATION_COUNT; ++a) {
-		population[a] = new Meeseeks();
+		population.push_back(new Meeseeks());
 
 	}
 
@@ -117,51 +117,45 @@ void Backstage::evolveOnce(Meeseeks* subj) {
 	case 1:
 		tmp->moveLeft();
 		break;
-	case 2:
-		tmp->moveRight();
-		break;
-	case 3:
-		tmp->moveUp();
-		break;
 
 	}
 }
 
-int cmp(const void *a, const void *b) {
-	int mA = ((Meeseeks*)a)->getEnergy();
-	int mB = ((Meeseeks*)b)->getEnergy();
-
-	if (mA > mB)return 1;
-	if (mA < mB)return -1;
-	return 0;
+bool cmp(  Meeseeks* a,   Meeseeks* b){
+	if (a->getEnergy() > b->getEnergy()) return true;
+return false;
 }
 
 void Backstage::startEvolution() {
 	map.clear();
-	//for (int a = 0; a < 50; ++a)
-	//	map.push_back(new Rectangle(a*0.05 , 0, 0.05, 0.05));
 	consumeFigure(goal);
-	//for (int a = 0; a < POPULATION_COUNT; ++a) {
-	//	evolveOnce(population[a]);
-	//	population[a]->setEnergy(calcCostFunction(population[a]));
-	//}
-	population[0]->getBody()->moveLeft();
+	/*for (int a = 0; a < 50; ++a)
+		map.push_back(new Rectangle(a*0.05 , 0, 0.05, 0.05));*/
+ 
+	for (int a = 0; a < population.size(); ++a) {
+		evolveOnce(population[a]);
+		population[a]->setEnergy(calcCostFunction(population[a]));
+	}
 
-	//std::qsort(population, 100, sizeof(Meeseeks*), cmp);
-	//for (int a = 25; a < 100; ++a) {
-	//	population[a] = population[rand() % 25];
-	//}
+ 
+	std::sort(population.begin(),population.end(),cmp);
+	/*for (int a = 25; a < POPULATION_COUNT; ++a) {
+		population[a] = 0;
+	}*/
 
+	population.erase(population.begin());
+ 
+ 
 }
 
 int Backstage::calcCostFunction(Meeseeks* obj) {
-	int dist = sqrt(pow(goal->getX() - obj->getBody()->getX(), 2) + pow(goal->getY() - obj->getBody()->getY(), 2));
+	int dist = sqrt(pow(goal->getX() - obj->getBody()->getX(), 2) + pow(goal->getY() - obj->getBody()->getY(), 2))*1000;
 	return dist;
 }
 
 
 void Backstage::nudge() {
-	for (int a = 0; a < POPULATION_COUNT; ++a) {
+	for (int a = 0; a < population.size(); ++a) {
 		population[a]->getBody()->fulfilProphecy();
 		consumeFigure(population[a]->getBody());
 		
