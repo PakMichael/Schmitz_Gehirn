@@ -2,20 +2,18 @@
 #define ENGINE_H
 
 
-#include "observer.h"
 #include "glew/glew.h"
 #include "GLFW/glfw3.h"
 #include "entity.h"
+#include <supervisor.h>
 #include <string>
 #include <vector>
 
-class Engine : public Observer{
+
+class Engine : public Supervisor{
 	Entity* backstage;
 	Entity* playersFigure;
 	GLFWwindow* window;
-	bool redraw;
-	bool nudgeFigure;
-	bool dropFigure;
 	int screenHeight, screenWidth;
 
 
@@ -33,9 +31,9 @@ private:
 	void glewInitialize();
 	void eventsInitialize();
 	void windowInitialize(int* h, int* w);
-	void update(std::string msg, void* obj);
-	void Engine::initializeGL();
-
+	void initializeGL();
+	void initializeRemarks();
+	void initializeFlags();
 };
 
 #endif

@@ -10,8 +10,8 @@ bool blueprints[7][8] = {   /* sorry for this :C */
 Figure::Figure(float height, float width) {
 	this->relativeHeight = height;
 	this->relativeWidth = width;
-	tempX = relativeWidth * (rand() % 40 - 20);
-	tempY = 1;
+	tempX = 0;
+	tempY = 0;
 
 	speed = 1;
 	collidedGround = false;
@@ -29,10 +29,14 @@ void Figure::init() {
 	//t = std::thread(&Figure::freeFall, this);
 }
 
+
+void Figure::nudge() {
+
+}
 void Figure::freeFall() {
 	while (!collidedGround)
 	{
-		notify("drop");
+		setFlag("drop", true);
 		clock_t now = clock() / CLOCKS_PER_SEC;
 		while (clock() / CLOCKS_PER_SEC - now < speed);
 
@@ -42,9 +46,9 @@ void Figure::freeFall() {
 
 
 void Figure::moveTo(int key) {
-	if (key == 'E') { collidedGround = true; notify("immovable"); } //always called from main thread
+	if (key == 'E') { collidedGround = true; makeRemark("immovable", 0); } //always called from main thread
 	directionKey = key;
-	notify("moveTo");
+	makeRemark("moveTo", 0);
 }
 
 void Figure::moveRight() {
@@ -79,12 +83,21 @@ void Figure::rotate() {
 
 }
 
+void Figure::moveNTimesBy(int x, int y) {
+	tempX += relativeHeight * x;
+	tempY += relativeWidth * y;
+}
 
 int Figure::getDirection() {
 	return directionKey;
 }
+float Figure::getX() {
+	return mX;
+}
 
-
+float Figure::getY() {
+	return mY;
+}
 void Figure::constructCarcass() {
 	//runs once at the beginning 
 	//later only visually translates image without any change in model
@@ -147,6 +160,7 @@ bool Figure::intersects(Rectangle* rec) {
 void Figure::fulfilProphecy() {
 	mX = tempX;
 	mY = tempY;
+
 	constructCarcass();
 }
 

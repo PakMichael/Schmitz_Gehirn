@@ -6,19 +6,24 @@
 #include <cmath>
 #include <figure.h>
 
+const int GENE_AMOUNT = 4;
+
 class Meeseeks {
-	const int numberOfGenes=3;
-	int randTable[100];  //100 percent
-	int genome[3];
+
+	int genome[GENE_AMOUNT];
 	int energy;
 	Figure* mortalBody;
+	std::vector<int> probabilityDistribution;
+public:
+	int id;
 
 public:
 	Meeseeks();
 	int getNextMove();
 	Figure* getBody();
+	void setEnergy(int E);
+	int getEnergy();
 private:
-	void seedRandTable();
 	void produceGenes();
 
 };

@@ -2,34 +2,52 @@
 
 Meeseeks::Meeseeks() {
 	mortalBody = new Figure(0.05, 0.05);
-	seedRandTable();
 	produceGenes();
+	id = rand() % 1000;
+
 }
 int Meeseeks::getNextMove() {
 
-	int randIndex = rand() % 100;
-	return randTable[randIndex];
 
 
-}
-
-
-void Meeseeks::seedRandTable() {
-	int tempIndex = 0;
-	for (int a = 0; a < numberOfGenes; ++a) {
-		for (int b = 0; b < genome[a]; b++) {
-			randTable[tempIndex++] = a;
-		}
+	int temp = rand() % probabilityDistribution.size();
+	switch (temp) {
+	case 0: // gene responsible for looking
+		energy += 1;
+		break;
+	case 1:
+		energy += 2;
+		break;
+	case 2:
+		energy += 3;
+		break;
 	}
+	return probabilityDistribution[temp];
+
+
 }
+
 
 void Meeseeks::produceGenes() {
-	for (int a = 0; a < numberOfGenes; ++a) {
-		genome[a] = rand() % 100;
+	for (int a = 0; a < GENE_AMOUNT; ++a) {
+		int geneValue = rand() % 100;
+		genome[a] = geneValue;
+		for (int b = 0; b < geneValue; ++b) {
+			probabilityDistribution.push_back(a);
+		}
 	}
+
 
 }
 
 Figure* Meeseeks::getBody() {
 	return mortalBody;
+}
+
+
+void Meeseeks::setEnergy(int E) {
+	energy = E;
+}
+int Meeseeks::getEnergy() {
+	return energy;
 }
