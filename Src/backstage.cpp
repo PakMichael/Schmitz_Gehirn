@@ -117,7 +117,12 @@ void Backstage::evolveOnce(Meeseeks* subj) {
 	case 1:
 		tmp->moveLeft();
 		break;
-
+	case 2:
+		tmp->moveUp();
+		break;
+	case 3:
+		tmp->moveRight();
+		break;	
 	}
 }
 
